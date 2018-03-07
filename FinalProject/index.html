@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="finalProject">
+<head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Patient Profile</title>
+
+    <!-- Bootstrap -->
+    <link href="./libs/bootstrap/css/bootstrap.css" rel="stylesheet">
+      
+    <!-- jQuery -->
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    
+    <!-- jQuery DataTables -->
+    <script src="./node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    
+    <!-- Angular -->
+    <script src="./node_modules/angular/angular.min.js"></script>
+    
+    <!-- Angular Datatables -->
+    <script src="./node_modules/angular-datatables/dist/angular-datatables.js"></script>
+    <link rel="stylesheet" href="./node_modules/angular-datatables/dist/css/angular-datatables.css">
+    
+
+    
+    
+    
+</head>
+    
+<body >
+
+<!-- Module | Dependencies Injection-->   
+<script>
+     var app = angular.module("finalProject", ['datatables']);
+
+    app.controller('myTable', myTable);
+    function myTable($scope, $http){
+        $scope.data = {};
+        console.log("cc");
+        $http.get('./data/hospital.json').then(function(response){
+            $scope.data.patients = response.data.patients;
+
+        }, function(error){
+            $scope.data.error = error;
+        });
+    }
+       
+</script>
+
+</body>
+</html>
