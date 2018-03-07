@@ -31,36 +31,6 @@
 </head>
     
 <body >
-    <div class="navbar navbar-inverse">
-        <a class="navbar-brand" href="#">Patient Profile</a>
-    </div>
-
-    <div ng-controller="myTable">
-        <table datatable="ng" class="row-border hover">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Identify number</th>
-                <th>Address</th>
-                <th>D.O.B</th>
-                <th>Place of Birth</th>
-                <th>Sex</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="patient in data.patients">
-                <td>{{ patient.patient_code }}</td>
-                <td>{{ patient.name }}</td>
-                <td>{{ patient.identity_card }}</td>
-                <td>{{ patient.address }}</td>
-                <td>{{ patient.dob }}</td>
-                <td>{{ patient.pob }}</td>
-                <td>{{ patient.sex }}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
 
 <!-- Module | Dependencies Injection-->   
 <script>
