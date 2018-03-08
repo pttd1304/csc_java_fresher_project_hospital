@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('UserController', ['$scope', '$http', function($scope, $http) { 
+app.controller('TreatmentController', ['$scope', '$http', function($scope, $http) { 
     
     var self = this;
     self.user={id:null,username:'',password:''};
@@ -12,7 +12,7 @@ app.controller('UserController', ['$scope', '$http', function($scope, $http) {
     self.reset = reset;
 
     function fetchAllUsers(){
-     $http.get('http://localhost:8080/DemoSpringMVCHibernate/ajax/users').then(function(response){
+     $http.get('http://localhost:8080/DemoSpringMVCHibernate/users').then(function(response){
             $scope.users= response.data;
 
         }, function(error){
@@ -24,7 +24,7 @@ app.controller('UserController', ['$scope', '$http', function($scope, $http) {
     function createUser(user){
         var req = {
          method: 'POST',
-         url: 'http://localhost:8080/DemoSpringMVCHibernate/ajax/users',
+         url: 'http://localhost:8080/DemoSpringMVCHibernate/ajax/addUser',
          headers: {         
             'Accept': 'application/json',
             'Content-Type': 'application/json; charset=UTF-8'
@@ -39,8 +39,8 @@ app.controller('UserController', ['$scope', '$http', function($scope, $http) {
     }
     function updateUser(user){
          var req = {
-         method: 'PUT',
-         url: 'http://localhost:8080/DemoSpringMVCHibernate/ajax/users/' + user.id,
+         method: 'POST',
+         url: 'http://localhost:8080/DemoSpringMVCHibernate/ajax/addUser',
          headers: {         
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -56,8 +56,8 @@ app.controller('UserController', ['$scope', '$http', function($scope, $http) {
     function deleteUser(user){
         console.log("Yo");
         var req = {
-         method: 'DELETE',
-         url: 'http://localhost:8080/DemoSpringMVCHibernate/ajax/users/' + user.id,
+         method: 'POST',
+         url: 'http://localhost:8080/DemoSpringMVCHibernate/ajax/delete/',
          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json; charset=UTF-8'   
