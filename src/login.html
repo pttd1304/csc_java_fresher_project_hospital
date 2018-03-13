@@ -9,9 +9,6 @@
 
     <title>Log in</title>
       
-    <!-- Angular -->
-    <script src="../node_modules/angular/angular.min.js"></script>  
-
     <!-- Bootstrap -->
     <link href="../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -26,13 +23,11 @@
 
   <body class="login">
     <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
 
       <div class="login_wrapper">
           
         <!-- Login -->
-        <div class="animate form login_form" ng-controller="loginController">
+        <div class="animate form login_form" ng-controller="LoginController">
           <section class="login_content">
               
             <!-- Login form -->
@@ -52,10 +47,6 @@
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">New employee?
-                  <a href="#signup" > Create Account </a>
-                </p>
-
                 <div class="clearfix"></div>
                 <br />
               </div>
@@ -64,84 +55,9 @@
         </div>
         
         <!-- Register -->  
-        <div id="register" class="animate form registration_form" ng-controller="registerController">
-          <section class="login_content">
-              
-            <!-- Register form -->
-            <form name="form" novalidate >
-              <h1>Create Account</h1>
-              <div>
-                <input type="text" class="form-control" placeholder="Username" required ng-model="user.name" name="Username"/>
-              </div>
-              <div>
-                <input type="email" class="form-control" placeholder="Email" required ng-model="user.email" name="Email"/>
-              </div>
-              <div>
-                <input type="password" class="form-control" placeholder="Password" required ng-model="user.password" name="Password"/>
-              </div>
-              <div>
-                <input type="text" class="form-control" placeholder="Idenity number" required ng-model="user.identity" ng-minlength="9" ng-maxlength="9" name="Identity"/>
-              </div>
-              <div>
-                <input type="text" class="form-control" placeholder="Phone" required ng-model="user.phone" ng-minlength="10" ng-maxlength="11" name="Phone"/>
-              </div>
-              <div>
-                <input type="text" class="form-control" placeholder="Address" required ng-model="user.address" name="Address"/>
-              </div>
-
-              <div ng-show="form.Identity.$invalid">
-                  <span ng-show="form.Identity.$error.number">Invalid identity number</span>
-                  <span ng-show="form.Identity.$error.minlength">Invalid identity number</span>
-                  <span ng-show="form.Identity.$error.maxlength">Invalid identity number</span>
-              </div>
-              <div ng-show="form.Phone.$invalid">
-                  <span ng-show="form.Phone.$error.number">Invalid phone number</span>
-                  <span ng-show="form.Phone.$error.minlength">Invalid phone number</span>
-                  <span ng-show="form.Phone.$error.maxlength">Invalid phone number</span>
-              </div>
-
-              <div>
-                <a class="btn btn-default submit" href="#" ng-disabled="registerForm.$invalid || isUnchanged(user)">Submit</a>
-              </div>
-              <div class="clearfix"></div>
-
-              <div class="separator">
-                <p class="change_link">Already a member ?
-                  <a href="#signin" class="to_register"> Log in </a>
-                </p>
-
-                <div class="clearfix"></div>
-                <br />
-              </div>
-            </form>
-          </section>
-        </div>
+        
       </div>
     </div>
-    <script type="text/javascript">
-    var app = angular.module("finalProject", []);
-
-    app.controller('registerController', registerController);
-    function registerController($scope){
-
-    }
-    
-    app.controller('loginController', loginController);
-    function loginController($scope){
-        $scope.submit = function(){
-            if($scope.user.name == "admin" && $scope.user.password == "123"){
-                $scope.action = "./admin/admin-view-users.html";
-                
-            } else if($scope.user.name == "doctor"){
-                $scope.action = "./doctor/doctor-main.html";
-            }  else {
-                $scope.action = "./nurse/nurse-main.html"
-            }       
-        }
-        
-    }
-       
-    </script>
     <style>
         input.ng-invalid.ng-dirty {
             background-color: #FA787E;
@@ -150,5 +66,28 @@
             background-color: #78FA89;
         }
      </style>
+    <!-- jQuery -->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    
+    <!-- jQuery DataTables -->
+    <script src="../node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    
+    <!-- Angular -->
+    <script src="../node_modules/angular/angular.min.js"></script>
+    
+    <!-- Angular Datatables -->
+    <script src="../node_modules/angular-datatables/dist/angular-datatables.js"></script>
+    
+    <!-- Module | Dependencies Injection-->   
+    <script src="../controllers/app.js"></script>
+    
+    <!-- Controllers -->
+    <script src="../controllers/login-controller.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- Custom Theme Script -->
+    <script src="../libs/build/js/custom.min.js"></script>
   </body>
 </html>
