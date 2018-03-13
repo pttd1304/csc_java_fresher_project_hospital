@@ -1,12 +1,12 @@
 
-app.controller('AdminController', ['$scope', '$http', function($scope, $http, detail) { 
+app.controller('AdminController', ['$scope', '$http', function($scope, $http) { 
     
     var self = this;
     
     self.user={id:null, username: '', password:'', role:'', cmnd: ''};
     self.users=[];
     
-    self.person={id:null,fullname:'',address:'', dob:'', sex:'',treatments:[],cmnd:''};
+    self.person={id:null,fullname:'',address:'', dob:'', sex:'',cmnd:''};
     self.persons=[];
     
     self.treatment={id:null, prescription:'', result:'', doctorId:'', diseases:''};
@@ -25,63 +25,56 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
     self.edit = edit;
     self.remove = remove;
     self.reset = reset;
-    self.add = add;
-//    $scope.treatments = detail.getDetail();
-
-    
-    function add(){
-        $scope.addTreatment = !$scope.addTreatment;
-    }
-    
+    self.view = view;
    
 
     function fetchAllPersons(){
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/persons').then(function(response){
             $scope.persons= response.data;
             
-        }, function(error){
-            console.log("a");
+        }, function(){
+            
         });
     }
     
     fetchAllPersons();
     
     
-//    function fetchAllTreatmentsById(id){
-//     console.log("a"); 
-//     $http.get('http://localhost:8080/DemoSpringMVCHibernate/treatments/'+id).then(function(response){
-//            
-//            console.log(detail.getData);
-//        }, function(error){
-//            
-//        });
-//    }
+    function fetchAllTreatments(){ 
+     $http.get('http://localhost:8080/DemoSpringMVCHibernate/treatments/').then(function(response){
+            $scope.treatments = response.data;
+        }, function(){
+            
+        });
+    }
+    
+    function fetchAllTreatmentsById(id){ 
+     $http.get('http://localhost:8080/DemoSpringMVCHibernate/treatments/'+id).then(function(response){
+            $scope.treatmentsById = response.data;
+            console.log($scope.treatmentsById);
+        }, function(){
+            
+        });
+    }
         
+    fetchAllTreatments();
+    
     function fetchAllUsers(){
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/users').then(function(response){
-            $scope.users = response.data;
-            
-        }, function(error){
-            console.log("a");
+            $scope.users = response.data;      
+        }, function(){
         });
     }
     
     fetchAllUsers();
     
-    $scope.addDetailToList = function(person){
-        detail.addDetail(person);
-    }
-    
-    function viewDetail(person){
-        console.log("a");
-    }
     
     function fetchAllMedicines(){
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/medicines').then(function(response){
             $scope.medicines = response.data;
             
-        }, function(error){
-            console.log("a");
+        }, function(){
+            
         });
     }
     fetchAllMedicines();
@@ -90,8 +83,8 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/logs').then(function(response){
             $scope.logs = response.data;
             
-        }, function(error){
-            console.log("a");
+        }, function(){
+            
         });
     }
     fetchAllLogs();
@@ -99,18 +92,18 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
     
     function create(choice, value){
         switch(choice){
-            case 1: //user
+            case 1: //user        
                 var req = {
                  method: 'POST',
-                 url: 'http://localhost:8080/DemoSpringMVCHibernate/persons',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/users',
                  headers: {         
                     'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=UTF-8'
-
                  },
                  data: JSON.stringify(value),
                  dataType: 'json',
                 }
+                console.log("aaaaa");
                 $http(req).then(fetchAllUsers, function(){console.log("CCC")});
                 break;
             case 2: //medicine
@@ -140,20 +133,6 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                  dataType: 'json',
                 }
                 $http(req).then(fetchAllPersons, function(){console.log("CCC")});
-                break;
-            case 4:
-                var req = {
-                 method: 'POST',
-                 url: 'http://localhost:8080/DemoSpringMVCHibernate/treatments',
-                 headers: {         
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json; charset=UTF-8'
-
-                 },
-                 data: JSON.stringify(value),
-                 dataType: 'json',
-                }
-                $http(req).then(fetchAllTreatments, function(){console.log("CCC")});
                 break;
             default:
                 break;
@@ -208,21 +187,6 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                 }
                 console.log("Update...")
                 $http(req).then(fetchAllPersons, function(){console.log("CCC")});
-                break;
-            case 4:
-                var req = {
-                 method: 'PUT',
-                 url: 'http://localhost:8080/DemoSpringMVCHibernate/treatments/' + value.id,
-                 headers: {         
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-
-                 },
-                 data: JSON.stringify(value),
-                 dataType: 'json',
-                }
-                console.log("Update...")
-                $http(req).then(fetchAllTreatments, function(){console.log("CCC")});
                 break;
             default:
                 break;
@@ -301,7 +265,7 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                     update(1, self.user);
                     console.log('User updated with id ', self.user.id);
                 }
-                reset(); 
+                reset(1); 
                 break;
             case 2: //medicine
                 if(self.medicine.id===null){
@@ -311,7 +275,7 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                     update(2, self.medicine);
                     console.log('Medicine updated with id ', self.medicine.id);
                 }
-                reset(); 
+                reset(2); 
                 break;
             case 3: //patient profiles    
                 if(self.person.id===null){
@@ -321,22 +285,18 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                     update(3, self.person);
                     console.log('Patient profile updated with id ', self.person.id);
                 }
-                reset(); 
-                break;
-            case 4:
-                if(self.treatment.id===null){
-                    console.log('Saving New Treatment', self.treatment);
-                    create(4, self.treatment);
-                }else{
-                    update(4, self.treatment);
-                    console.log('Treatment updated with id ', self.treatment.id);
-                }
-                reset(); 
+                reset(3); 
                 break;
             default:
                 break;
         }
                 
+    }
+    
+    function view(person){
+        self.person = angular.copy(person);
+        fetchAllTreatmentsById(person.id);
+        $scope.profile = !$scope.profile;
     }
 //
     function edit(choice, value){
@@ -353,9 +313,6 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                 console.log('Patient profile id to be edited', value.id);
                 self.person = angular.copy(value);
                 break;
-            case 4: //Treatment
-                 self.treatment = angular.copy(value);
-                break;
             default:
                 break;
         }
@@ -365,30 +322,23 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
             case 1:    //user
                 console.log('User id to be deleted', value.id);
                 if(self.user.id === value.id) {//clean form if the user to be deleted is shown there.
-                    reset();
+                    reset(1);
                 }
                 deleteSomething(1, value);
                 break;
             case 2: //medicine
                 console.log('Medicine id to be deleted', value.id);
                 if(self.medicine.id === value.id) {//clean form if the user to be deleted is shown there.
-                    reset();
+                    reset(2);
                 }
                 deleteSomething(2, value);
                 break;
             case 3: //patient profiles
                 console.log('Patient profile id to be deleted', value.id);
                 if(self.person.id === value.id) {//clean form if the user to be deleted is shown there.
-                    reset();
+                    reset(3);
                 }
                 deleteSomething(3, value);
-                break;
-            case 4:
-                console.log('Treatment id to be deleted', value.id);
-                if(self.treatment.id === value.id) {//clean form if the user to be deleted is shown there.
-                    reset();
-                }
-                deleteSomething(4, value);
                 break;
             default:
                 break;
@@ -404,7 +354,7 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
                 self.medicine = {id:null, name:'',nsx:'', exp:'', company:''}
                 break;
             case 3: //patients profile
-                self.person={id:null,fullname:'',address:'', dob:'', sex:'',cmnd:'',role:'',job:'',treatmentId:''};
+                self.person={id:null,fullname:'',address:'', dob:'', sex:'',cmnd:''};
                 break;
             default:
                 break;
@@ -412,5 +362,7 @@ app.controller('AdminController', ['$scope', '$http', function($scope, $http, de
         
         $scope.myForm.$setPristine(); //reset Form
     }
+    
+    
 
 }]);
