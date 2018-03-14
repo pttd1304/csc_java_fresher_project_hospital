@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="finalProject">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Log in</title>
+      
+    <!-- Bootstrap -->
+    <link href="../../libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../../libs/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="../../libs/animate.css/animate.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../../libs/build/css/custom.min.css" rel="stylesheet">
+  </head>
+
+  <body class="login">
+    <div>
+
+      <div class="login_wrapper">
+          
+        <!-- Login -->
+        <div class="animate form login_form" ng-controller="LoginController">
+          <section class="login_content">
+              
+            <!-- Login form -->
+            <form action="{{action}}" ng-submit="submit()" >
+              <h1>Login Form</h1>
+              <div>
+                <input type="text" class="form-control" placeholder="Username" required="" ng-model="user.name" name="Username"/>
+              </div>
+              <div>
+                <input type="password" class="form-control" placeholder="Password" required="" ng-model="user.password" name="Password" />
+              </div>
+              <div>
+                <input type="submit" class="btn btn-default submit"/ >
+                <a class="reset_pass" href="#">Lost your password?</a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <div class="separator">
+                <div class="clearfix"></div>
+                <br />
+              </div>
+            </form>
+          </section>
+        </div>
+        
+        <!-- Register -->  
+        
+      </div>
+    </div>
+    <style>
+        input.ng-invalid.ng-dirty {
+            background-color: #FA787E;
+        }
+        input.ng-valid.ng-dirty {
+            background-color: #78FA89;
+        }
+     </style>
+    <!-- jQuery -->
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+    
+    <!-- jQuery DataTables -->
+    <script src="../../node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    
+    <!-- Angular -->
+    <script src="../../node_modules/angular/angular.min.js"></script>
+    
+    <!-- Angular Datatables -->
+    <script src="../../node_modules/angular-datatables/dist/angular-datatables.js"></script>
+    
+    <!-- Controllers -->
+    <script src="../../controllers/login-controller.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="../../libs/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- Custom Theme Script -->
+    <script src="../../libs/build/js/custom.min.js"></script>
+  </body>
+</html>

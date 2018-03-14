@@ -1,0 +1,138 @@
+<div class="right_col" role="main" class="animate form registration_form" id="register">
+    <div class="page-title">
+      <div class="title_left">
+        <!-- Title here if wanted -->
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+              <!-- Filter information if wanted -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Information list -->
+    <div class="clearfix"></div>
+
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Add personal info</h3>
+            <ul class="nav navbar-right panel_toolbox">
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+            <div class="x_content" >
+
+                <!-- Add/Update Form -->
+                <form ng-submit="ctrl.submit(3)" name="ctrl.myForm" class="form-horizontal"  >
+
+                  <input type="hidden" ng-model="ctrl.person.id" />
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="fullname">Patient name</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.person.fullname" id="fullname" name ="fullname" class="form-control input-sm" placeholder="Enter full name"/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="address">Address</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.person.address" id="address" name ="address" class="form-control input-sm" placeholder="Enter address"/>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="dob">D.O.B</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.person.dob" id="dob" name ="dob" class="form-control input-sm" placeholder="Enter birthday"/>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="sex">Patient name</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.person.sex" id="sex" name ="sex" class="form-control input-sm" placeholder="Enter sex"/>
+                          </div>
+                      </div>
+                  </div>
+
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="cmnd">CMND</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.person.cmnd" name="cmnd" id="cmnd" class="cmnd form-control input-sm" placeholder="Enter identity" required ng-minlength="9" ng-maxlength="9"/>
+                              <div class="has-error" ng-show="ctrl.myForm.$dirty">
+                                  <span ng-show="ctrl.myForm.cmnd.$error.required">This is a required field</span>
+                                  <span ng-show="ctrl.myForm.cmnd.$error.minlength">Minimum length required is 9</span>
+                                  <span ng-show="ctrl.myForm.cmnd.$error.maxlength">Maximum length required is 9</span>
+                                  <span ng-show="ctrl.myForm.cmnd.$invalid">This field is invalid </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <div class="row">
+                      <div class="form-actions floatRight">
+                          <input type="submit" value="{{!ctrl.person.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="ctrl.myForm.$invalid" >
+                          <button type="button" ng-click="ctrl.reset(3)" class="btn btn-warning btn-sm" ng-disabled="ctrl.myForm.$pristine">Reset Form</button>
+                      </div>
+                  </div>
+              </form>
+
+            </div>
+        </div>
+      </div>           
+    </div>
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Patient Personal Info </h3>
+              
+            <div class="clearfix"></div>
+              
+          </div>
+            <div class="x_content">
+                <table datatable="ng" class="table table-hover" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient</th>
+                    <th>Address</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th>CMND</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="person in ctrl.persons">
+                    <td>{{ person.id }}</td>
+                    <td>{{ person.fullname }}</td>
+                    <td>{{ person.address }}</td>
+                    <td>{{ person.dob }}</td>
+                    <td>{{ person.sex }}</td>
+                    <td>{{ person.cmnd }}</td>
+                    <td align="right">
+                        <a href="#/admin-patients/profile"><button type="button" ng-click="ctrl.view(person)" class="btn btn-info"><i class="fa fa-folder-open"></i></button></a>
+                        
+                        <button type="button" ng-click="ctrl.edit(3, person)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                        
+                        <button type="button" ng-click="ctrl.remove(3, person)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+             </table>
+            </div>
+        </div>
+      </div>           
+    </div>
+  </div>

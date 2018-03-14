@@ -51,15 +51,7 @@ body, .form-control{
       background-color: yellow;
   }
 
-  .email.ng-valid {
-      background-color: lightgreen;
-  }
-  .email.ng-dirty.ng-invalid-required {
-      background-color: red;
-  }
-  .email.ng-dirty.ng-invalid-email {
-      background-color: yellow;
-  }
+
 .dialogdemoBasicUsage #popupContainer {
   position: relative; }
 

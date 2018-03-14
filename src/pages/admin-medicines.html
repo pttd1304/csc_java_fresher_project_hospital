@@ -1,0 +1,143 @@
+<div class="right_col" role="main" class="animate form registration_form" id="register">
+    <div class="page-title">
+      <div class="title_left">
+        <!-- Title here if wanted -->
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+              <!-- Filter information if wanted -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Information list -->
+    <div class="clearfix"></div>
+
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Add new medicine</h3>
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu" >
+                  <li>a</li>
+                </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+            <div class="x_content" >
+
+                <!-- Add/Update Form -->
+                <form ng-submit="ctrl.submit(2)" name="myForm" class="form-horizontal"  >
+                  <input type="hidden" ng-model="ctrl.medicine.id" />
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="name">Medicine name</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.medicine.name" name="name" id="name" class="cmnd form-control input-sm" placeholder="Enter medicine name" required ng-minlength="3" />
+                              <div class="has-error" ng-show="myForm.$dirty">
+                                  <span ng-show="myForm.name.$error.required">This is a required field</span>
+                                  <span ng-show="myForm.name.$error.minlength">Minimum length required is 9</span>
+                                  <span ng-show="myForm.name.$invalid">This field is invalid </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="nsx">Released date</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.medicine.nsx" id="nsx" name ="nsx" class="form-control input-sm" placeholder="Enter released date."/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="exp">Expiration date</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.medicine.exp" id="exp" name="exp" class="form-control input-sm" placeholder="Enter expiration date."/>
+
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="company">Company</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.medicine.company" id="company" name="company" class="form-control input-sm" placeholder="Enter company."/>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="form-actions floatRight">
+                          <input type="submit" value="{{!ctrl.medicine.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="myForm.$invalid" >
+                          <button type="button" ng-click="ctrl.reset(2)" class="btn btn-warning btn-sm" ng-disabled="myForm.$pristine">Reset Form</button>
+                      </div>
+                  </div>
+              </form>
+
+            </div>
+        </div>
+      </div>           
+    </div>
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Medicines </h3>
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu" >
+                  <li>a</li>
+                </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+            <div class="x_content">
+                <table datatable="ng" class="table table-hover" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Medicine name</th>
+                    <th>Released date</th>
+                    <th>Expiration date</th>
+                    <th>Company</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="medicine in ctrl.medicines">
+                    <td>{{ medicine.id }}</td>
+                    <td>{{ medicine.name }}</td>
+                    <td>{{ medicine.nsx }}</td>
+                    <td>{{ medicine.exp }}</td>
+                    <td>{{ medicine.company }}</td>
+                    <td align="right">
+                        <button type="button" ng-click="ctrl.edit(2, medicine)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                        <button type="button" ng-click="ctrl.remove(2, medicine)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+             </table>
+            </div>
+        </div>
+      </div>           
+    </div>
+  </div>

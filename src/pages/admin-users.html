@@ -1,0 +1,144 @@
+
+<div class="right_col" role="main" class="animate form registration_form" id="register">
+    <div class="page-title">
+      <div class="title_left">
+        <!-- Title here if wanted -->
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+              <!-- Filter information if wanted -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Information list -->
+    <div class="clearfix"></div>
+
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Add new user</h3>
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu" >
+                  <li>a</li>
+                </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+            <div class="x_content" >
+
+                <!-- Add/Update Form -->
+                <form ng-submit="ctrl.submit(1)" name="ctrl.myForm" class="form-horizontal"  >
+                  <input type="hidden" ng-model="ctrl.user.id" />
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="cmnd">CMND</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.user.cmnd" name="cmnd" id="cmnd" class="cmnd form-control input-sm" placeholder="Enter cmnd" required ng-minlength="9" ng-maxlength="9"/>
+                              <div class="has-error" ng-show="ctrl.myForm.$dirty">
+                                  <span ng-show="ctrl.myForm.cmnd.$error.required">This is a required field</span>
+                                  <span ng-show="ctrl.myForm.cmnd.$error.minlength">Minimum length required is 9</span>
+                                  <span ng-show="ctrl.myForm.cmnd.$error.maxlength">Maximum length required is 9</span>
+                                  <span ng-show="ctrl.myForm.cmnd.$invalid">This field is invalid </span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="username">Username</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.user.username" id="username" name ="username" class="form-control input-sm" placeholder="Enter username"/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="password">Password</label>
+                          <div class="col-md-7">
+                              <input type="password" ng-model="ctrl.user.password" id="password" name ="password" class="form-control input-sm" placeholder="Enter password."/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="role">Role</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.user.role" id="role" name="role" class="form-control input-sm" placeholder="Enter Role" min="1" max="3"/>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="form-actions floatRight">
+                          <input type="submit" value="{{!ctrl.user.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="ctrl.myForm.$invalid" >
+                          <button type="button" ng-click="ctrl.reset(1)" class="btn btn-warning btn-sm" ng-disabled="ctrl.myForm.$pristine">Reset Form</button>
+                      </div>
+                  </div>
+              </form>
+
+            </div>
+        </div>
+      </div>           
+    </div>
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>User accounts </h3>
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu" >
+                  <li>a</li>
+                </ul>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+            <div class="x_content">
+                <table datatable="ng" class="table table-hover" >
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>CMND</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in ctrl.users">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.password }}</td>
+                    <td>{{ user.cmnd }}</td>
+                    <td>{{ user.role }}</td>
+                    <td align="right">
+                        <button type="button" ng-click="ctrl.edit(1, user)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                        <button type="button" ng-click="ctrl.remove(1, user)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+             </table>
+            </div>
+        </div>
+      </div>           
+    </div>
+  </div>
