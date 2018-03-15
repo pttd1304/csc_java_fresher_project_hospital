@@ -4,8 +4,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
     $locationProvider.hashPrefix('');
      $routeProvider
             .when('/',{
-                templateUrl : './test.html',
-                controller  : 'LoginController'
+                templateUrl : './welcome.html',
+
             })
             .when('/admin-users', {
                 templateUrl : './admin-users.html',
@@ -34,8 +34,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
                 templateUrl : './nurse-persons-detail.html',
                 controller  : 'NurseController'
             })
-            .when('/doctor', {
-                templateUrl : './doctor.html',
+            .when('/doctor-search1', {
+                templateUrl : './doctor-search-1.html',
+                controller  : 'DoctorController'
+            })
+            .when('/doctor-search2', {
+                templateUrl : './doctor-search-2.html',
                 controller  : 'DoctorController'
             })
             .when('/doctor-treatments', {

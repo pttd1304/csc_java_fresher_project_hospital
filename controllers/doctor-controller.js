@@ -1,12 +1,15 @@
 'use strict';
-app.controller('DoctorController', ['$scope', '$http', function($scope, $http) { 
+app.controller('DoctorController', ['$scope', '$http',  function($scope, $http) { 
     
     var self = this;
-        
+    
+    self.user={id:null, username: '', password:'', role:'', cmnd: ''};
+    self.users=[];
+    
     self.person={id:null,fullname:'',address:'', dob:'', sex:'',cmnd:''};
     self.persons=[];
     
-    self.treatment={id:null, prescription:'', medicalResult:'', doctorId:'', diseases:'', personId:''};
+    self.treatment={id:null, prescription:'', medicalResult:'', medicine:'', diseases:'', personId:''};
     self.treatments=[];
     
     self.medicine={id:null, name:'',nsx:'', exp:'', company:''};
@@ -15,11 +18,15 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     self.allergy={id:null, personId:'', medicine:''};
     self.allergies=[];
     
+    self.log={id:null, timeModified: "", doctorId: "", doctorName: "", changes: ""};
+    self.logs=[];
+    
     self.submit = submit;
     self.edit = edit;
     self.remove = remove;
     self.reset = reset;
     self.view = view;
+    self.view2 = view2;
 
     function fetchAllPersons(){
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/persons').then(function(response){
@@ -30,6 +37,14 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     }
     fetchAllPersons();
     
+    function fetchPersonById(id){
+     $http.get('http://localhost:8080/DemoSpringMVCHibernate/persons/'+id).then(function(response){
+            self.person= angular.copy(response.data);
+        }, function(){
+            
+        });
+    }
+    
     
     function fetchAllTreatments(){ 
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/treatments/').then(function(response){
@@ -38,7 +53,7 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
             
         });
     }
-    
+    fetchAllTreatments();
     
     function fetchAllTreatmentsById(id){ 
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/treatments/'+id).then(function(response){
@@ -51,11 +66,21 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     
     function fetchAllAllergiesById(id){ 
      $http.get('http://localhost:8080/DemoSpringMVCHibernate/allergies/'+id).then(function(response){
-            self.allergies = response.data;
+            $scope.allergiesById = response.data[0];
         }, function(){
             
         });
     }
+    
+    
+    function fetchAllUsers(){ //Dang xai rootscope
+        $http.get('http://localhost:8080/DemoSpringMVCHibernate/users').then(function(response){
+        self.users = response.data; 
+
+        }, function(){
+        });
+    }
+    fetchAllUsers();
     
     
     function fetchAllMedicines(){
@@ -68,9 +93,33 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     }
     fetchAllMedicines();
     
+    function fetchAllLogs(){
+     $http.get('http://localhost:8080/DemoSpringMVCHibernate/logs').then(function(response){
+            self.logs = response.data;
+            
+        }, function(){
+            
+        });
+    }
+    fetchAllLogs();
     
     function create(choice, value){
         switch(choice){
+            case 1: //user        
+                var req = {
+                 method: 'POST',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/users',
+                 headers: {         
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8'
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                $http(req).then(function(){
+                                fetchAllUsers()
+                }, function(){console.log("CCC")});
+                break;
             case 2: //medicine
                 var req = {
                  method: 'POST',
@@ -107,7 +156,7 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                     }, 
                     function(){console.log("CCC")});
                 break;
-            case 4: //treatment
+            case 4: //patient profiles
                 var req = {
                  method: 'POST',
                  url: 'http://localhost:8080/DemoSpringMVCHibernate/treatments',
@@ -126,6 +175,40 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                      
                     , function(){console.log("CCC")});
                 break;
+            case 5: //allergies
+                var req = {
+                 method: 'POST',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/allergies',
+                 headers: {         
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8'
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                $http(req).then(
+                    function(){
+                        fetchAllAllergiesById(value.id)
+                    }          
+                    , function(){console.log("CCC")});
+                break;
+            case 6:
+                var req = {
+                 method: 'POST',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/logs',
+                 headers: {         
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8'
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                $http(req).then(
+                    function(){
+                        console.log(value);
+                    }          
+                    , function(){console.log("CCC")});
+                break;
             default:
                 break;
         }
@@ -134,6 +217,21 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     
     function update(choice, value){
         switch (choice){
+            case 1: //User
+                 var req = {
+                 method: 'PUT',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/users/' + value.id,
+                 headers: {         
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                console.log("Update...")
+                $http(req).then(fetchAllUsers, function(){console.log("CCC")});
+                break;
             case 2:
                 var req = {
                  method: 'PUT',
@@ -180,7 +278,22 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                         fetchAllTreatmentsById(value.personId)
                     }, function(){console.log("CCC")});
                 break;
-                
+            case 5:
+                var req = {
+                 method: 'PUT',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/allergies/' + value.id,
+                 headers: {         
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                console.log("Update...")
+                $http(req).then(function(){
+                        fetchAllAllergiesById(value.personId)
+                    }, function(){console.log("CCC")});
+                break;              
             default:
                 break;
         }
@@ -190,6 +303,23 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     
     function deleteSomething(choice, value){
         switch (choice){
+            case 1: //user
+                var req = {
+                 method: 'DELETE',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/users/' + value.id,
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8'   
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                $http(req).then(
+                    function(){
+                        fetchAllUsers()
+                    }
+                    , function(){console.log("CCC")});
+                break;
             case 2: //medicine
                 var req = {
                  method: 'DELETE',
@@ -233,6 +363,21 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                         fetchAllTreatmentsById(value.personId)
                     }, function(){console.log("CCC")});
                 break;
+            case 5:
+                 var req = {
+                 method: 'DELETE',
+                 url: 'http://localhost:8080/DemoSpringMVCHibernate/allergies/' + value.id,
+                 headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8'   
+                 },
+                 data: JSON.stringify(value),
+                 dataType: 'json',
+                }
+                $http(req).then(function(){
+                        fetchAllAllergiesById(value.personId)
+                    }, function(){console.log("CCC")});
+                break;
             default:
                 break;
         }
@@ -242,6 +387,16 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     
     function submit(choice) {
         switch(choice){
+            case 1:    //user
+                if(self.user.id===null){
+                    console.log('Saving New User', self.user);
+                    create(1, self.user);
+                }else{
+                    update(1, self.user);
+                    console.log('User updated with id ', self.user.id);
+                }
+                reset(1); 
+                break;
             case 2: //medicine
                 if(self.medicine.id===null){
                     console.log('Saving New Medicine', self.medicine);
@@ -263,13 +418,40 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                 reset(3); 
                 break;
             case 4:
+                var currentdate = new Date(); 
+                var datetime =  ":" + currentdate.getDate() + "/"
+                                + (currentdate.getMonth()+1)  + "/" 
+                                + currentdate.getFullYear() + " @ "  
+                                + currentdate.getHours() + ":"  
+                                + currentdate.getMinutes() + ":" 
+                                + currentdate.getSeconds();
+                self.log.timeModified = datetime;
+                self.log.doctorId = self.person.id;
+                self.log.doctorName = self.person.fullname;
+                
                 if(self.treatment.id===null){
                     self.treatment.personId = self.person.id;
+                    self.log.changes = "Create treatment";
+                    
                     console.log('Saving New Treatment', self.treatment);
                     create(4, self.treatment);
+                    create(6, self.log);
                 }else{
                     update(4, self.treatment);
+                    self.log.changes = "Update treatment";
+                    create(6, self.log);
                     console.log('Treatment updated with id ', self.treatment.id);
+                }
+                reset(4); 
+                break;
+            case 5:
+                if(self.allergy.id===null){
+                    self.allergy.personId = self.person.id;
+                    console.log('Saving New Allergy', self.allergy);
+                    create(5, self.allergy);
+                }else{
+                    update(5, self.allergy);
+                    console.log('Allergy updated with id ', self.allergy.id);
                 }
                 reset(4); 
                 break;
@@ -284,9 +466,20 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
         fetchAllTreatmentsById(person.id);
         fetchAllAllergiesById(person.id);
     }
+    
+    function view2(treatment){
+        
+        fetchPersonById(treatment.personId);
+        fetchAllTreatmentsById(treatment.personId);
+        fetchAllAllergiesById(treatment.personId);
+    }
 
     function edit(choice, value){
         switch (choice){
+            case 1: //User
+                console.log('User id to be edited', value.id);
+                self.user = angular.copy(value);
+                break;
             case 2: //Medicine
                 console.log('Medicine id to be edited', value.id);
                 self.medicine = angular.copy(value);
@@ -299,6 +492,11 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                 console.log('Treatment id to be edited', value.id);
                 self.treatment = angular.copy(value);
                 break;
+            case 5: //Allergy
+                $scope.addAllergy = !$scope.addAllergy;
+                console.log('Allergy id to be edited', value.id);
+                self.allergy = angular.copy(value);
+                break;
             default:
                 break;
         }
@@ -306,6 +504,13 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     
     function remove(choice, value){       
         switch(choice){
+            case 1:    //user
+                console.log('User id to be deleted', value.id);
+                if(self.user.id === value.id) {//clean form if the user to be deleted is shown there.
+                    reset(1);
+                }
+                deleteSomething(1, value);
+                break;
             case 2: //medicine
                 console.log('Medicine id to be deleted', value.id);
                 if(self.medicine.id === value.id) {//clean form if the user to be deleted is shown there.
@@ -321,11 +526,18 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                 deleteSomething(3, value);
                 break;
             case 4:
-                console.log('Patient profile id to be deleted', value.id);
+                console.log('Treatment id to be deleted', value.id);
                 if(self.treatment.id === value.id) {//clean form if the user to be deleted is shown there.
                     reset(4);
                 }
                 deleteSomething(4, value);
+                break;
+            case 5:
+                console.log('Allergy id to be deleted', value.id);
+                if(self.allergy.id === value.id) {//clean form if the user to be deleted is shown there.
+                    reset(5);
+                }
+                deleteSomething(5, value);
                 break;
             default:
                 break;
@@ -334,6 +546,9 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
     
     function reset(choice){
         switch (choice){
+            case 1: //user
+                self.user={id:null, username: '', password:'', role:'', cmnd: ''};     
+                break;
             case 2: //medicine
                 self.medicine = {id:null, name:'',nsx:'', exp:'', company:''}
                 break;
@@ -341,15 +556,16 @@ app.controller('DoctorController', ['$scope', '$http', function($scope, $http) {
                 self.person={id:null,fullname:'',address:'', dob:'', sex:'',cmnd:''};
                 break;
             case 4: //treatment
-                self.treatment={id:null, prescription:'', medicalResult:'', doctorId:'', diseases:'', personId:''};
+                self.treatment={id:null, prescription:'', medicalResult:'', medicine:'', diseases:'', personId:''};
                 break;
-            case 5: 
+            case 5: //allergy
                 self.allergy={id:null, personId:'', medicine:''};
                 break;
             default:
                 break;
         } 
-        $scope.ctrl.myForm.$setPristine();      
+        $scope.ctrl.myForm.$setPristine();
+       
     }
     
 }]);

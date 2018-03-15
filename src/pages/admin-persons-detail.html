@@ -29,7 +29,7 @@
                       <div class="form-group col-md-12">
                           <label class="col-md-2 control-lable" for="prescription">Prescription</label>
                           <div class="col-md-7">
-                              <textarea ng-model="ctrl.treatment.prescription" id="prescription" name="prescription" placeholder="Input patient prescription" class="form-control" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100" 
+                              <textarea ng-model="ctrl.treatment.prescription" id="prescription" name="prescription" placeholder="Input patient prescription" class="form-control"  data-parsley-minlength="20" data-parsley-maxlength="100" 
                               data-parsley-validation-threshold="10"></textarea>
                           </div>
                       </div>
@@ -53,14 +53,9 @@
 
                  <div class="row">
                       <div class="form-group col-md-12">
-                          <label class="col-md-2 control-lable" for="doctorId">Doctor ID</label>
+                          <label class="col-md-2 control-lable" for="medicine">Medicine taking</label>
                           <div class="col-md-7">
-                              <input type="text" ng-model="ctrl.treatment.doctorId" name="doctorId" id="doctorId" class="cmnd form-control input-sm" placeholder="Enter doctor ID" required ng-minlength="3" />
-                              <div class="has-error" ng-show="ctrl.myForm.$dirty">
-                                  <span ng-show="ctrl.myForm.doctorId.$error.required">This is a required field</span>
-                                  <span ng-show="ctrl.myForm.doctorId.$error.minlength">Minimum length required is 3</span>
-                                  <span ng-show="ctrl.myForm.doctorId.$invalid">This field is invalid </span>
-                              </div>
+                              <input type="text" ng-model="ctrl.treatment.medicine" name="medicine" id="medicine" class="cmnd form-control input-sm" placeholder="Enter medicine"  />
                           </div>
                       </div>
                   </div>
@@ -138,10 +133,35 @@
                           </div>
                       </div>
                   </div>
+                <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="allergy">Allergic medicines</label>
+                          <div class="col-md-7" >
+                              {{allergiesById.medicine}}
+                          </div>
+                          <div class="col-md-1" >
+                              <button type="button" ng-click="ctrl.edit(5, allergiesById)" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></button>
+                          </div>
+                      </div>
+                  </div>
+                <div class="row" ng-show="addAllergy">
+                      <div class="form-group col-md-12">
+                          <form ng-submit="ctrl.submit(5)" name="ctrl.myForm" class="form-horizontal"  >
+                            <textarea ng-model="ctrl.allergy.medicine" id="allergy" name="allergy" class="form-control"  data-parsley-minlength="20" data-parsley-maxlength="100">                     
+                            </textarea>
+                            <div class="clearfix"></div>
+                              <div class="form-actions floatRight">
+                                  <input type="submit" value="Add" class="btn btn-primary btn-sm" >
+                              </div>
+                            
+                          </form>
+                      </div>
+                  </div>
+                <div class='clearfix'></div>
                 <div class='clearfix'></div>
                 <div class="row">
                       <div class="form-group col-md-12">
-                          <label class="col-md-4 control-lable" ><h4>TREATMENT PROFILE</h4></label>
+                          <label class="col-md-4 control-lable" >TREATMENT PROFILE</label>
                       </div>
                   </div>
 
@@ -152,7 +172,7 @@
                             <th>History of diseases</th>
                             <th>Prescription</th>
                             <th>Medical result</th>
-                            <th>Doctor ID</th>
+                            <th>Medicines taking</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -161,7 +181,7 @@
                             <td>{{ treatment.diseases }}</td>
                             <td>{{ treatment.prescription }}</td>
                             <td>{{ treatment.medicalResult }}</td>
-                            <td>{{ treatment.doctorId }}</td>
+                            <td>{{ treatment.medicine }}</td>
 
                             <td align="right">
                                 <button type="button" ng-click="ctrl.edit(4, treatment)" class="btn btn-warning"><i class="fa fa-edit"></i></button>

@@ -1,0 +1,64 @@
+<div class="right_col" role="main" class="animate form registration_form" id="register">
+    <div class="page-title">
+      <div class="title_left">
+        <!-- Title here if wanted -->
+      </div>
+
+      <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          <div class="input-group">
+              <!-- Filter information if wanted -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="clearfix"></div>
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Patient Treatments List </h3>
+              
+            <div class="clearfix"></div>
+              
+          </div>
+            <div class="x_content">
+                <table datatable="ng" class="table table-hover" >
+                <thead>
+                <tr>
+                    <th>Treatment No.</th>
+                    <th>Diseases</th>
+                    <th>Prescription</th>
+                    <th>Medical result</th>
+                    <th>Medicines</th>
+                    <th>Person ID</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="treatment in ctrl.treatments">
+                    <td>{{ treatment.id }}</td>
+                    <td>{{ treatment.diseases }}</td>
+                    <td>{{ treatment.prescription }}</td>
+                    <td>{{ treatment.medicalResult }}</td>
+                    <td>{{ treatment.medicine }}</td>
+                    <td>{{ treatment.personId }}</td>
+                    <td align="right">
+                        <a href="#/doctor-treatments"><button type="button" ng-click="ctrl.view2(treatment)" class="btn btn-info"><i class="fa fa-folder-open"></i></button></a>
+                        
+                        <button type="button" ng-click="ctrl.edit(3, person)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                        
+                        <button type="button" ng-click="ctrl.remove(3, person)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+             </table>
+            </div>
+        </div>
+      </div>           
+    </div>
+    
+  </div>

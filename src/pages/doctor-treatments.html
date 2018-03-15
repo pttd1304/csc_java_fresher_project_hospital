@@ -2,15 +2,198 @@
 <div class="right_col" role="main" class="animate form registration_form" id="register">
     <div class="page-title">
       <div class="title_left">
-        <h3>WELCOME!</h3>
+        <!-- Title here if wanted -->
       </div>
 
       <div class="title_right">
         <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
           <div class="input-group">
-              <!-- Filter information if wanted -->
           </div>
         </div>
       </div>
     </div>
-  </div>
+    
+    <div class="clearfix"></div>
+    
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Patient Profile</h3>
+            <div class="clearfix"></div>     
+          </div>
+          <div class="x_content" >
+            <form ng-submit="ctrl.submit(4)" name="ctrl.myForm" class="form-horizontal"  >
+                 <input type="hidden" ng-model="ctrl.treatment.id" />
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="prescription">Prescription</label>
+                          <div class="col-md-7">
+                              <textarea ng-model="ctrl.treatment.prescription" id="prescription" name="prescription" placeholder="Input patient prescription" class="form-control"  data-parsley-minlength="20" data-parsley-maxlength="100" 
+                              data-parsley-validation-threshold="10"></textarea>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="diseases">History</label>
+                          <div class="col-md-7">
+                              <textarea ng-model="ctrl.treatment.diseases" id="diseases" name="diseases" placeholder="Input history of diseases" class="form-control" ></textarea>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="medicalResult">Medical result</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.treatment.medicalResult" id="medicalResult" name ="medicalResult" class="form-control input-sm"/>
+                          </div>
+                      </div>
+                  </div>
+
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-2 control-lable" for="medicine">Medicine taking</label>
+                          <div class="col-md-7">
+                              <input type="text" ng-model="ctrl.treatment.medicine" name="medicine" id="medicine" class="cmnd form-control input-sm" placeholder="Enter medicine"  />
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row">
+                      <div class="form-actions floatRight">
+                          <input type="submit" value="{{!ctrl.treatment.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="ctrl.myForm.$invalid" >
+                          <button type="button" ng-click="ctrl.reset(4)" class="btn btn-warning btn-sm" ng-disabled="ctrl.myForm.$pristine">Reset Form</button>
+                      </div>
+                  </div>
+              </form>              
+            </div>
+        </div>
+      </div>           
+    </div>
+    
+    <div class="clearfix"></div>
+    
+    <div class="row" >
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h3>Patient Profile</h3>
+              
+            <div class="clearfix"></div>
+              
+          </div>
+            <div class="x_content" >
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="fullname">Patient ID</label>
+                          <div class="col-md-7 "> 
+                              {{ctrl.person.id}}
+                          </div>
+                      </div>
+                  </div>
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="fullname">Patient name</label>
+                          <div class="col-md-7">
+                              {{ctrl.person.fullname}}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="address">Address</label>
+                          <div class="col-md-7">
+                              {{ctrl.person.address}}
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="dob">Date of birth</label>
+                          <div class="col-md-7">
+                              {{ctrl.person.dob}}
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="sex">Gender</label>
+                          <div class="col-md-7">
+                              {{ctrl.person.sex}}
+                          </div>
+                      </div>
+                  </div>
+
+                 <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="cmnd">Identity number</label>
+                          <div class="col-md-7">
+                              {{ctrl.person.cmnd}}
+                          </div>
+                      </div>
+                  </div>
+                <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" for="allergy">Allergic medicines</label>
+                          <div class="col-md-7" >
+                              {{allergiesById.medicine}}
+                          </div>
+                          <div class="col-md-1" >
+                              <button type="button" ng-click="ctrl.edit(5, allergiesById)" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></button>
+                          </div>
+                      </div>
+                  </div>
+                <div class="row" ng-show="addAllergy">
+                      <div class="form-group col-md-12">
+                          <form ng-submit="ctrl.submit(5)" name="ctrl.myForm" class="form-horizontal"  >
+                            <textarea ng-model="ctrl.allergy.medicine" id="allergy" name="allergy" class="form-control"  data-parsley-minlength="20" data-parsley-maxlength="100">                     
+                            </textarea>
+                            <div class="clearfix"></div>
+                              <div class="form-actions floatRight">
+                                  <input type="submit" value="Add" class="btn btn-primary btn-sm" >
+                              </div>
+                            
+                          </form>
+                      </div>
+                  </div>
+                <div class='clearfix'></div>
+                <div class='clearfix'></div>
+                <div class="row">
+                      <div class="form-group col-md-12">
+                          <label class="col-md-4 control-lable" >TREATMENT PROFILE</label>
+                      </div>
+                  </div>
+
+                    <div class="x_content">
+                        <table datatable="ng" class="table table-hover" >
+                        <thead>
+                        <tr>
+                            <th>History of diseases</th>
+                            <th>Prescription</th>
+                            <th>Medical result</th>
+                            <th>Medicines taking</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="treatment in treatmentsById">
+                            <td>{{ treatment.diseases }}</td>
+                            <td>{{ treatment.prescription }}</td>
+                            <td>{{ treatment.medicalResult }}</td>
+                            <td>{{ treatment.medicine }}</td>
+
+                            <td align="right">
+                                <button type="button" ng-click="ctrl.edit(4, treatment)" class="btn btn-warning"><i class="fa fa-edit"></i></button>
+                                <button type="button" ng-click="ctrl.remove(4, treatment)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                     </table>
+                </div>
+            </div>
+        </div>
+      </div>           
+    </div>
+</div>    
+
