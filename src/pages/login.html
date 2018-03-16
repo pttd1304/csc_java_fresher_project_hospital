@@ -27,25 +27,31 @@
       <div class="login_wrapper">
           
         <!-- Login -->
-        <div class="animate form login_form" ng-controller="LoginController">
+        <div class="animate form login_form" ng-controller="LoginController as ctrl">
           <section class="login_content">
               
             <!-- Login form -->
-            <form action="{{action}}" ng-submit="submit()" >
+            <form ng-submit="ctrl.submit()" >
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" ng-model="user.name" name="Username"/>
+                <input type="text" class="form-control" placeholder="Username" required="" ng-model="ctrl.user.username" name="username"/>
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" ng-model="user.password" name="Password" />
+                <input type="password" class="form-control" placeholder="Password" required="" ng-model="ctrl.user.password"  name="password" />
               </div>
               <div>
-                <input type="submit" class="btn btn-default submit"/ >
-                <a class="reset_pass" href="#">Lost your password?</a>
+                <input type="submit" class="btn btn-default submit"/ > 
+                  
               </div>
 
               <div class="clearfix"></div>
-
+              <div align="center">
+                  
+                <p>{{greeting}}</p>
+                <a class="badge bg-red pull-right" ng-href={{link}} ng-show="login">Go to page</a>
+              </div>
+                
+              <div class="clearfix"></div>
               <div class="separator">
                 <div class="clearfix"></div>
                 <br />

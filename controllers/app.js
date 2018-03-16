@@ -2,6 +2,7 @@ var app = angular.module("finalProject", ['datatables', 'ngRoute']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
+
      $routeProvider
             .when('/',{
                 templateUrl : './welcome.html',
