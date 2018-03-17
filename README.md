@@ -1,7 +1,5 @@
-CSC Java Fresher project UI with Angular + Bootstrap + jQuery
+CSC Java Fresher project UI with Angularjs + Bootstrap + jQuery
 
-Features:
-Log in
-Register
-Main page
-Main page for Admin
+Getting Started:
+1. Set up the server to have data for UI to fetch. (See csc_java_fresher_backend)
+2. Start from the log in page "login.html". Enter any username from {backend}/users, or add a new one directly from SQL Server.
